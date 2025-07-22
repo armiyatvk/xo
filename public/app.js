@@ -1,11 +1,14 @@
 const socket = io();
 
+const playerXLabel = document.getElementById("playerX");
+const playerOLabel = document.getElementById("playerO");
+const resetBtn = document.getElementById("reset-btn");
 const canvas = document.getElementById("gameBoard");
 const ctx = canvas.getContext("2d");
 
 let mySymbol = null;
 let isMyTurn = false;
-const board = ["", "", "", "", "", "", "", "", ""];
+let board = ["", "", "", "", "", "", "", "", ""];
 
 function drawGrid() {
   ctx.clearRect(0, 0, 300, 300);
@@ -92,6 +95,22 @@ socket.on("gameOver", ({winner}) => {
   }
 });
 
-socket.on("waiting", (msg) => {
+socket.on("waiting", (id, msg) => {
+  playerXLabel.textContent = id;
+  playerOLabel.textContent = msg;
   console.log(msg);
+});
+
+socket.on("playerJoined", (xId, oId) => {
+  playerXLabel.textContent = xId;
+  playerOLabel.textContent = oId;
+});
+
+resetBtn.addEventListener("click", () => {
+  socket.emit("resetGame");
+});
+
+socket.on("resetBoard", () => {
+  board = Array(9).fill("");
+  drawGrid();
 });

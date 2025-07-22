@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
 
   if (waitingPlayer === null) {
     waitingPlayer = socket;
-    socket.emit("waiting", "Waiting for another player...");
+    socket.emit("waiting", socket.id, "Waiting for another player...");
   } else {
     const gameId = `game-${gameCounter++}`;
     const playerX = waitingPlayer;
@@ -62,6 +62,8 @@ io.on("connection", (socket) => {
 
     playerX.emit("startGame", {yourTurn: true});
     playerO.emit("startGame", {yourTurn: false});
+
+    io.emit("playerJoined", playerX.id, playerO.id);
 
     waitingPlayer = null;
   }
@@ -88,6 +90,10 @@ io.on("connection", (socket) => {
       players.X.emit("gameOver", {winner: null});
       players.O.emit("gameOver", {winner: null});
     }
+  });
+
+  socket.on("resetGame", () => {
+    io.emit("resetBoard");
   });
 });
 

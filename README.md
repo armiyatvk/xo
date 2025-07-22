@@ -17,15 +17,17 @@ This is a real-time, two-player Tic-Tac-Toe (XO) game built using **HTML Canvas*
 
 ## 📁 Project Structure
 
+```text
 xo-socket-game/
 ├── public/
-│ ├── index.html
-│ ├── app.js
-│ └── style.css (optional)
+│   ├── index.html
+│   ├── app.js
+│   └── style.css (optional)
 ├── server/
-│ └── server.js
+│   └── server.js
 ├── package.json
 └── README.md
+```
 
 ---
 
@@ -35,6 +37,12 @@ xo-socket-game/
 npm install
 npm start
 ```
+
+- Open your browser at [http://localhost:3000](http://localhost:3000)
+- Use **two different tabs** or **devices** to play as two players
+- Click on JOIN and the play the game
+
+---
 
 ## Tech Stack
 
